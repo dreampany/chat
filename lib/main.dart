@@ -1,0 +1,123 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(App());
+}
+
+class App extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "ChatX",
+      home: ChatScreen(),
+    );
+  }
+}
+
+class ChatScreen extends StatefulWidget {
+  @override
+  ChatScreenState createState() {
+    // TODO: implement createState
+    return ChatScreenState();
+  }
+}
+
+class ChatScreenState extends State<ChatScreen> {
+  final TextEditingController textController = TextEditingController();
+  final List<ChatMessage> messages = <ChatMessage>[];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("ChatX"),
+      ),
+      body: Column(
+        children: <Widget>[
+          Flexible(
+            child: new ListView.builder(
+              padding: new EdgeInsets.all(8.0),
+              reverse: true,
+              itemBuilder: (_, int index) => messages[index],
+              itemCount: messages.length,
+            ),
+          ),
+          Divider(height: 1.0),
+          Container(
+            decoration: BoxDecoration(color: Theme.of(context).cardColor),
+            child: buildTextComposer(),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget buildTextComposer() {
+    return IconTheme(
+        data: IconThemeData(color: Theme.of(context).accentColor),
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Row(
+            children: <Widget>[
+              Flexible(
+                child: TextField(
+                  onSubmitted: handleSubmitted,
+                  controller: textController,
+                  decoration:
+                      InputDecoration.collapsed(hintText: 'Send a message'),
+                ),
+              ),
+              Container(
+                margin: new EdgeInsets.symmetric(horizontal: 4.0),
+                child: IconButton(
+                  icon: Icon(Icons.send),
+                  onPressed: () => handleSubmitted(textController.text),
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+
+  void handleSubmitted(String text) {
+    textController.clear();
+    ChatMessage message = ChatMessage(text: text);
+    setState(() {
+      messages.insert(0, message);
+    });
+  }
+}
+
+class ChatMessage extends StatelessWidget {
+  final String text;
+
+  ChatMessage({this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            margin: const EdgeInsets.only(right: 16.0),
+            child: CircleAvatar(
+              child: Text('Roman'),
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              new Text('', style: Theme.of(context).textTheme.subhead),
+              new Container(
+                margin: const EdgeInsets.only(top: 5.0),
+                child: new Text(text),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
