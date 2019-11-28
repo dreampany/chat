@@ -8,6 +8,6 @@ library Constants;
 
 const String EMPTY = '';
 const String UID = 'uid';
-const String DISPLAY_NAME = 'display_name';
+const String NAME = 'name';
 const String PHOTO_URL = 'photo_url';
 const String FCM_TOKEN = 'fcm_token';

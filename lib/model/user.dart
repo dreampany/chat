@@ -9,18 +9,18 @@ import 'package:chat/misc/constants.dart' as Constants;
 
 class User {
   final String uid;
-  final String displayName;
+  final String name;
   final String photoUrl;
   final String fcmToken;
 
-  User(this.uid, this.displayName, this.photoUrl, this.fcmToken);
+  User(this.uid, this.name, this.photoUrl, this.fcmToken);
 
   User.fromFirebaseUser(FirebaseUser user) : this(user.uid, user.displayName, user.photoUrl, Constants.EMPTY);
 
   Map<String, dynamic> get map {
     return {
       Constants.UID: uid,
-      Constants.DISPLAY_NAME: displayName,
+      Constants.NAME: name,
       Constants.PHOTO_URL: photoUrl,
       Constants.FCM_TOKEN: fcmToken
     };
