@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(App());
 }
 
@@ -25,6 +26,7 @@ class ChatScreen extends StatefulWidget {
 class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   final TextEditingController textController = TextEditingController();
   final List<ChatMessage> messages = <ChatMessage>[];
+  bool composing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,14 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     );
   }
 
+  @override
+  void dispose() {
+    messages.forEach((message) {
+      message.animationController.dispose();
+    });
+    super.dispose();
+  }
+
   Widget buildTextComposer() {
     return IconTheme(
         data: IconThemeData(color: Theme.of(context).accentColor),
@@ -61,8 +71,9 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
             children: <Widget>[
               Flexible(
                 child: TextField(
-                  onSubmitted: handleSubmitted,
                   controller: textController,
+                  onSubmitted: handleSubmitted,
+                  onChanged: handleChange,
                   decoration:
                       InputDecoration.collapsed(hintText: 'Send a message'),
                 ),
@@ -71,7 +82,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                 margin: new EdgeInsets.symmetric(horizontal: 4.0),
                 child: IconButton(
                   icon: Icon(Icons.send),
-                  onPressed: () => handleSubmitted(textController.text),
+                  onPressed: composing ? () => handleSubmitted(textController.text) : null,
                 ),
               )
             ],
@@ -79,9 +90,17 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
         ));
   }
 
+  void handleChange(String text) {
+    setState(() {
+      composing = text.trim().isNotEmpty;
+    });
+  }
+
   void handleSubmitted(String text) {
-    if (text.isEmpty) return;
     textController.clear();
+    setState(() {
+      composing = false;
+    });
     ChatMessage message = ChatMessage(
       text: text,
       animationController: AnimationController(
@@ -103,7 +122,8 @@ class ChatMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizeTransition(
-      sizeFactor: CurvedAnimation(parent: animationController, curve: Curves.easeOut),
+      sizeFactor:
+          CurvedAnimation(parent: animationController, curve: Curves.easeOut),
       axisAlignment: 0.0,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 10.0),
