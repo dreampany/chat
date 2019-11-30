@@ -1,3 +1,5 @@
+import 'package:chat/model/user.dart';
+
 /**
  * Created by roman on 2019-11-28
  * Copyright (c) 2019 bjit. All rights reserved.
@@ -12,5 +14,9 @@ class LoginFailedResponse extends LoginResponse {
   LoginFailedResponse(this.error);
 }
 
+class LoginSuccessResponse extends LoginResponse {
+  final User user;
+  LoginSuccessResponse(this.user);
+}
 
 

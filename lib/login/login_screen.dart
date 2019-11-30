@@ -1,3 +1,5 @@
+import 'package:chat/login/login_bloc.dart';
+import 'package:chat/login/login_state.dart';
 import 'package:chat/misc/navigations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,8 +43,27 @@ class LoginWidget extends StatelessWidget {
         title: Text("Login"),
       ),
       body: BlocBuilder(
-        //bloc: BlocProvider.of<LoginBloc>(context),
-          builder: null
+          bloc: BlocProvider.of<LoginBloc>(context),
+          builder: (context, LoginState state) {
+            if (state.loading)
+              return Center(child: CircularProgressIndicator(strokeWidth: 4.0));
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                ButtonTheme(
+                  minWidth: 256.0,
+                  height: 32.0,
+                child: RaisedButton(
+                  onPressed: () => BlocProvider.of<LoginBloc>(context).loginOnGoogle(this),
+
+                ),
+
+                ],
+              ),
+            );
+          }
       ),
     );
   }

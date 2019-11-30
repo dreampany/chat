@@ -19,8 +19,7 @@ class User {
 
   User(this.uid, this.name, this.photoUrl, this.token);
 
-  User.fromFirebaseUser(FirebaseUser user)
-      : this(user.uid, user.displayName, user.photoUrl, Constants.EMPTY);
+  User.fromFirebaseUser(FirebaseUser user, {String token: Constants.EMPTY}) : this(user.uid, user.displayName, user.photoUrl, token);
 
   Map<String, dynamic> get map {
     return {
