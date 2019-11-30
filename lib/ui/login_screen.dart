@@ -7,10 +7,21 @@ import 'package:flutter/material.dart';
  * Last modified $file.lastModified
  */
 class LoginScreen extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return null;
   }
 
+}
+
+class LoginState extends State<LoginScreen> {
+
+}
+
+class LoginWidget extends StatelessWidget {
+  final LoginScreen screen;
+  final LoginState state;
+  const LoginWidget()
 }
