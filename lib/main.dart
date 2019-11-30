@@ -1,3 +1,4 @@
+import 'package:chat/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -5,7 +6,38 @@ void main() {
   runApp(App());
 }
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
+
+  @override
+  AppState createState() => AppState();
+}
+
+class AppState extends State<App> {
+  final key = GlobalKey<NavigatorState>();
+
+  @override
+  Widget build(BuildContext context) {
+    //PushNotificationsHandler pushNotificationsHandler = PushNotificationsHandler(key);
+    //pushNotificationsHandler.setup();
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "ChatX",
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        //home: LoginScreen(),
+        navigatorKey: key
+    );
+  }
+
+  @override
+  void dispose() {
+    //ChatRepo.getInstance().dismiss();
+    super.dispose();
+  }
+}
+
+/*class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,7 +46,7 @@ class App extends StatelessWidget {
       home: ChatScreen(),
     );
   }
-}
+}*/
 
 
 

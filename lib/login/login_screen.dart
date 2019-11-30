@@ -11,13 +11,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
  * Last modified $file.lastModified
  */
 class LoginScreen extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return null;
   }
-
 }
 
 class LoginScreenState extends State<LoginScreen> {
@@ -26,7 +24,6 @@ class LoginScreenState extends State<LoginScreen> {
     // TODO: implement build
     return null;
   }
-
 }
 
 class LoginWidget extends StatelessWidget {
@@ -52,19 +49,36 @@ class LoginWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                ButtonTheme(
-                  minWidth: 256.0,
-                  height: 32.0,
-                child: RaisedButton(
-                  onPressed: () => BlocProvider.of<LoginBloc>(context).loginOnGoogle(this),
-
-                ),
-
+                  ButtonTheme(
+                    minWidth: 256.0,
+                    height: 32.0,
+                    child: RaisedButton(
+                      onPressed: () => BlocProvider.of<LoginBloc>(context)
+                          .loginOnGoogle(this),
+                      child: Text(
+                        "Login with Google",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                  ButtonTheme(
+                    minWidth: 256.0,
+                    height: 32.0,
+                    child: RaisedButton(
+                      onPressed: () => BlocProvider.of<LoginBloc>(context)
+                          .loginOnGoogle(this),
+                      child: Text(
+                        "Login with Facebook",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      color: Colors.redAccent,
+                    ),
+                  )
                 ],
               ),
             );
-          }
-      ),
+          }),
     );
   }
 
