@@ -9,7 +9,7 @@ part of 'user.dart';
 User _$UserFromJson(Map<String, dynamic> json) {
   return User(
     json['uid'] as String,
-    json['displayName'] as String,
+    json['name'] as String,
     json['photoUrl'] as String,
     json['fcmToken'] as String,
   );
@@ -17,7 +17,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'uid': instance.uid,
-      'displayName': instance.displayName,
+      'name': instance.name,
       'photoUrl': instance.photoUrl,
-      'fcmToken': instance.fcmToken,
+      'fcmToken': instance.token,
     };

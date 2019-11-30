@@ -9,6 +9,6 @@ library Constants;
 const String EMPTY = '';
 const String USER = 'user';
 const String UID = 'uid';
-const String DISPLAY_NAME = 'displayName';
+const String NAME = 'name';
 const String PHOTO_URL = 'photoUrl';
-const String FCM_TOKEN = 'fcmToken';
+const String TOKEN = 'token';
