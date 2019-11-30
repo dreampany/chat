@@ -7,7 +7,8 @@ library Constants;
  */
 
 const String EMPTY = '';
+const String USER = 'user';
 const String UID = 'uid';
-const String NAME = 'name';
-const String PHOTO_URL = 'photo_url';
-const String FCM_TOKEN = 'fcm_token';
+const String DISPLAY_NAME = 'displayName';
+const String PHOTO_URL = 'photoUrl';
+const String FCM_TOKEN = 'fcmToken';
