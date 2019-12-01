@@ -1,3 +1,4 @@
+import 'package:chat/home/home_screen.dart';
 import 'package:chat/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
  * Last modified $file.lastModified
  */
 class Navigators {
+
   static void goToLogin(BuildContext context, {bool addToBackStack: false}) {
     if (addToBackStack) {
       Navigator.push(
@@ -20,6 +22,47 @@ class Navigators {
           MaterialPageRoute(builder: (context) => LoginScreen())
       );
     }
+  }
 
+  static void goToHome(BuildContext context, {bool addToBackStack: false}) {
+    if (addToBackStack) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen())
+      );
+    } else {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen())
+      );
+    }
+  }
+
+  static void goToCreateRoom(BuildContext context, {bool addToBackStack: false}) {
+    if (addToBackStack) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen())
+      );
+    } else {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen())
+      );
+    }
+  }
+
+  static void goToRoom(BuildContext context, String roomId, String name, {bool addToBackStack: false}) {
+    if (addToBackStack) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen())
+      );
+    } else {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen())
+      );
+    }
   }
 }

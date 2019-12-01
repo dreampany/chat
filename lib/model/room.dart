@@ -14,5 +14,5 @@ class Room {
   final List<User> participants;
   final List<Message> messages;
 
-  Room(this.id, this.name, this.participants, this.messages);
+  Room({this.id, this.name, this.participants, this.messages});
 }

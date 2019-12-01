@@ -22,7 +22,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   StreamSubscription<FirebaseUser> listener;
 
   @override
-  // TODO: implement initialState
   LoginState get initialState => LoginState.initial();
 
   @override
@@ -46,10 +45,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         final provider = user.providerId;
         UserRepo.of().setCurrentUser(User.fromFirebaseUser(user));
         widget.goToHome();
-        Constants.logger.v(provider);
+        Constants.logger.d("LOGIN" + provider);
       }
     }, onError: (error) {
       add(LoginErrorEvent(error));
+      Constants.logger.e("LOGIN Error", error);
     });
   }
 
