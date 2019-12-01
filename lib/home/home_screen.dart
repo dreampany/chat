@@ -67,7 +67,10 @@ class HomeWidget extends StatelessWidget {
                   padding: EdgeInsets.all(Constants.Ui.SMALLER_PADDING),
                   itemBuilder: (context, index) {
                     return InkWell(
-                      child: ,
+                      child: getItem(state.rooms[index]),
+                      onTap: () {
+
+                      },
                     );
                   }
               );
@@ -77,12 +80,18 @@ class HomeWidget extends StatelessWidget {
   }
 
   UserItem getItem(Room room) {
-    return UserItem(user: room.participants.first);
+    return UserItem(user: room.participants.last);
   }
 
-  void goToLogin() {}
+  void createRoom() {
+    Navigators.goToCreateRoom(state.context, addToBackStack: true);
+  }
+
+  void goToLogin() {
+    Navigators.goToLogin(state.context, addToBackStack: true);
+  }
 
   void goToRoom(Room room) {
-    // Navigators.goToRoom(context, roomId, name)
+     Navigators.goToRoom(state.context, room.id, room.name)
   }
 }
