@@ -92,6 +92,6 @@ class HomeWidget extends StatelessWidget {
   }
 
   void goToRoom(Room room) {
-     Navigators.goToRoom(state.context, room.id, room.name)
+     //Navigators.goToRoom(state.context, room.id, room.name)
   }
 }
