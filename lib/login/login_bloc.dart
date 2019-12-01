@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:chat/login/login_event.dart';
 import 'package:chat/login/login_screen.dart';
 import 'package:chat/model/user.dart';
+import 'package:chat/repo/login_repo.dart';
 import 'package:chat/repo/user_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -53,14 +54,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   void loginOnGoogle(LoginWidget widget) async {
+    Constants.logger.d("LOGIN loginOnGoogle");
     add(LoginEventInProgress());
     final google = GoogleSignIn(scopes: [Constants.PROFILE, Constants.EMAIL]);
     final account = await google.signIn();
     if (account == null) {
+      Constants.logger.d("LOGIN Account Not Found");
       add(LogoutEvent());
-      //Login.of().signInWithGoogle(account);
     } else {
-
+      Constants.logger.d("LOGIN Account " + account.displayName);
+      LoginRepo.of().signInWithGoogle(account);
     }
   }
 }

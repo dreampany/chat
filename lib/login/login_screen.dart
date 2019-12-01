@@ -11,18 +11,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
  * Last modified $file.lastModified
  */
 class LoginScreen extends StatefulWidget {
+  LoginScreen({Key key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return null;
-  }
+  LoginScreenState createState() => LoginScreenState();
 }
 
 class LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return null;
+    return BlocProvider<LoginBloc>(
+      builder: (context) => LoginBloc(),
+      child: LoginWidget(screen: widget, state: this),
+    );
   }
 }
 
@@ -62,7 +63,7 @@ class LoginWidget extends StatelessWidget {
                       color: Colors.redAccent,
                     ),
                   ),
-                  ButtonTheme(
+/*                  ButtonTheme(
                     minWidth: 256.0,
                     height: 32.0,
                     child: RaisedButton(
@@ -74,7 +75,7 @@ class LoginWidget extends StatelessWidget {
                       ),
                       color: Colors.redAccent,
                     ),
-                  )
+                  )*/
                 ],
               ),
             );

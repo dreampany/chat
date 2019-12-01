@@ -25,7 +25,7 @@ class AppState extends State<App> {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        //home: LoginScreen(),
+        home: LoginScreen(),
         navigatorKey: key
     );
   }
