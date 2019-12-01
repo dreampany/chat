@@ -29,13 +29,16 @@ class LoginRepo {
   Future<LoginResponse> signIn(AuthCredential credential) async {
     final result = await auth.signInWithCredential(credential);
     if (result == null || result.user == null) {
+      Constants.logger
+          .d("LOGIN:: AuthCredential Failed");
       return LoginFailedResponse(Constants.ErrorMessages.NO_USER_FOUND);
     } else {
       final token = await UserRepo.of().getToken();
       final user = User.fromFirebaseUser(result.user, token: token);
+      Constants.logger.d("LOGIN:: AuthCredential Success");
       await firestore
           .collection(Constants.Firestore.USERS)
-          .document(Constants.Firestore.UID)
+          .document(user.uid)
           .setData(user.map, merge: true);
       return LoginSuccessResponse(user);
     }

@@ -30,5 +30,5 @@ class ErrorMessages {
 class Firestore {
   static const String USERS = "users";
   static const String ROOMS = "rooms";
-  static const String UID = USERS + "/{uid}";
+  static const String UID = "/{uid}";
 }
