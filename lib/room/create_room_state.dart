@@ -21,8 +21,7 @@ class CreateRoomState {
 
   CreateRoomState._internal(this.loading, {this.users, this.action});
 
-  factory CreateRoomState.initial() =>
-      CreateRoomState._internal( true);
+  factory CreateRoomState.initial() => CreateRoomState._internal( true);
 
   factory CreateRoomState.isLoading(bool loading, CreateRoomState state) =>
       CreateRoomState._internal(loading, users: state.users);
