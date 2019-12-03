@@ -1,6 +1,6 @@
 import 'package:chat/home/home_bloc.dart';
 import 'package:chat/home/home_state.dart';
-import 'package:chat/home/user_item.dart';
+import 'package:chat/model/user_item.dart';
 import 'package:chat/misc/navigations.dart';
 import 'package:chat/model/room.dart';
 import 'package:flutter/material.dart';

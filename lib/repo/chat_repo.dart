@@ -67,7 +67,8 @@ class ChatRepo {
   }
 
   Future<Room> startRoom(User currentUser, User otherUser) async {
-    //DocumentReference currentRef = firestore.
+    DocumentReference currentRef = firestore.collection(Constants.Firestore.USERS).document(currentUser.uid);
+    QuerySnapshot snapshot =await
   }
 
   Future<bool> sendMessage(
@@ -88,4 +89,6 @@ class ChatRepo {
       return false;
     }
   }
+
+
 }
