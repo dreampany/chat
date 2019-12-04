@@ -21,6 +21,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons:
+  splashscreen:
   flutter_bloc:
   firebase_auth:
   firebase_messaging:

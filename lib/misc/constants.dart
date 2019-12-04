@@ -10,7 +10,6 @@ import 'package:logger/logger.dart';
 
 const String EMPTY = '';
 
-
 const String USER = 'user';
 const String UID = 'uid';
 const String NAME = 'name';
@@ -18,12 +17,15 @@ const String PHOTO_URL = 'photoUrl';
 const String TOKEN = 'token';
 const String PROFILE = 'profile';
 const String EMAIL = 'email';
+const String LOGGED_IN = 'logged_in';
 
 var logger = Logger(
   printer: PrettyPrinter(),
 );
 
 class Ui {
+  static const int SPLASH_TIMEOUT = 2;
+
   // FONT SIZE
   static const double SMALLER_FONT_SIZE = 10.0;
   static const double STANDARD_FONT_SIZE = 14.0;

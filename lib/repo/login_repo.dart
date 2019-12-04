@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:chat/misc/constants.dart' as Constants;
+import 'package:shared_preferences/shared_preferences.dart';
 
 /**
  * Created by roman on 2019-11-30
@@ -26,11 +27,22 @@ class LoginRepo {
     return instance;
   }
 
+  Future<bool> loggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.containsKey(Constants.LOGGED_IN)
+        ? prefs.getBool(Constants.LOGGED_IN)
+        : false;
+  }
+
+  void setLoggedIn(bool loggedIn) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(Constants.LOGGED_IN, loggedIn);
+  }
+
   Future<LoginResponse> signIn(AuthCredential credential) async {
     final result = await auth.signInWithCredential(credential);
     if (result == null || result.user == null) {
-      Constants.logger
-          .d("LOGIN:: AuthCredential Failed");
+      Constants.logger.d("LOGIN:: AuthCredential Failed");
       return LoginFailedResponse(Constants.ErrorMessages.NO_USER_FOUND);
     } else {
       final token = await UserRepo.of().getToken();
@@ -40,6 +52,7 @@ class LoginRepo {
           .collection(Constants.Firestore.USERS)
           .document(user.uid)
           .setData(user.map, merge: true);
+      setLoggedIn(true);
       return LoginSuccessResponse(user);
     }
   }
@@ -50,13 +63,16 @@ class LoginRepo {
           .e("LoginRepo::logOut() encountered an error:\n${error.error}");
       return false;
     }).then((value) {
+      setLoggedIn(false);
       return true;
     });
   }
 
   Future<LoginResponse> signInWithGoogle(GoogleSignInAccount account) async {
     final authentication = await account.authentication;
-    final credential = GoogleAuthProvider.getCredential(idToken: authentication.idToken, accessToken: authentication.accessToken);
+    final credential = GoogleAuthProvider.getCredential(
+        idToken: authentication.idToken,
+        accessToken: authentication.accessToken);
     return signIn(credential);
   }
 

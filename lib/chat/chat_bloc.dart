@@ -42,6 +42,6 @@ loadMessages();
 
   void loadMessages() async {
     final User user = await UserRepo.of().currentUser();
-    subscription = ChatRepo.of().ge
+    //subscription = ChatRepo.of().ge
   }
 }

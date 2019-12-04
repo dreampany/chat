@@ -1,13 +1,14 @@
 import 'package:chat/login/login_screen.dart';
+import 'package:chat/repo/login_repo.dart';
 import 'package:flutter/material.dart';
-
+import 'package:splashscreen/splashscreen.dart';
+import 'package:chat/misc/constants.dart' as Constants;
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(App());
 }
 
 class App extends StatefulWidget {
-
   @override
   AppState createState() => AppState();
 }
@@ -25,9 +26,12 @@ class AppState extends State<App> {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: LoginScreen(),
-        navigatorKey: key
-    );
+        //home: LoginScreen(),
+        home: SplashScreen(
+          seconds: Constants.Ui.SPLASH_TIMEOUT,
+          navigateAfterSeconds:  (LoginRepo.of().loggedIn()) ? LoginScreen() : LoginScreen(),
+        ),
+        navigatorKey: key);
   }
 
   @override
@@ -47,19 +51,6 @@ class AppState extends State<App> {
     );
   }
 }*/
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -128,7 +119,9 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                 margin: new EdgeInsets.symmetric(horizontal: 4.0),
                 child: IconButton(
                   icon: Icon(Icons.send),
-                  onPressed: composing ? () => handleSubmitted(textController.text) : null,
+                  onPressed: composing
+                      ? () => handleSubmitted(textController.text)
+                      : null,
                 ),
               )
             ],
