@@ -29,7 +29,7 @@ class AppState extends State<App> {
         //home: LoginScreen(),
         home: SplashScreen(
           seconds: Constants.Ui.SPLASH_TIMEOUT,
-          navigateAfterSeconds:  (LoginRepo.of().loggedIn()) ? LoginScreen() : LoginScreen(),
+          navigateAfterSeconds:    LoginScreen(),
         ),
         navigatorKey: key);
   }

@@ -29,9 +29,8 @@ class LoginRepo {
 
   Future<bool> loggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.containsKey(Constants.LOGGED_IN)
-        ? prefs.getBool(Constants.LOGGED_IN)
-        : false;
+    //return prefs.containsKey(Constants.LOGGED_IN)
+    return prefs.getBool(Constants.LOGGED_IN) ?? false;
   }
 
   void setLoggedIn(bool loggedIn) async {
