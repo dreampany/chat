@@ -57,7 +57,7 @@ class HomeWidget extends StatelessWidget {
               content = Center(
                 child: CircularProgressIndicator(strokeWidth: 4.0),
               );
-            } else if (state.rooms.isEmpty) {
+            } else if (!state.hasRooms()) {
               content = Center(
                   child: Text(
                       "Looks like you don't have any active chatrooms\nLet's start one right now!",

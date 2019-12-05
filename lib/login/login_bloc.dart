@@ -45,7 +45,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         final provider = user.providerId;
         UserRepo.of().setCurrentUser(User.fromFirebaseUser(user));
         widget.goToHome();
-        Constants.logger.d("LOGIN" + provider);
+        Constants.logger.d("LOGIN SUCCESS" + provider);
       }
     }, onError: (error) {
       add(LoginErrorEvent(error));

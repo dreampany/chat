@@ -12,8 +12,7 @@ class HomeState {
   final Room room;
   final bool loggedIn;
 
-  HomeState._internal(this.loading,
-      {this.rooms, this.room, this.loggedIn = true});
+  HomeState._internal(this.loading, {this.rooms, this.room, this.loggedIn = true});
 
   factory HomeState.initial() => HomeState._internal(false);
 
@@ -31,4 +30,8 @@ class HomeState {
 
   factory HomeState.reset(HomeState state) =>
       HomeState._internal(state.loading, rooms: state.rooms);
+
+  bool hasRooms() {
+    return !(rooms == null || rooms.isEmpty);
+  }
 }

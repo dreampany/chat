@@ -36,6 +36,7 @@ class LoginWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<LoginBloc>(context).setAuthListener(this);
     return Scaffold(
       appBar: AppBar(
         title: Text("Login"),
@@ -84,6 +85,6 @@ class LoginWidget extends StatelessWidget {
   }
 
   void goToHome() {
-    //Navigators.goToLogin(context)
+    Navigators.goToHome(state.context);
   }
 }
