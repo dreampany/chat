@@ -1,8 +1,9 @@
+import 'package:chat/home/home_screen.dart';
 import 'package:chat/login/login_screen.dart';
-import 'package:chat/repo/login_repo.dart';
+import 'package:chat/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:splashscreen/splashscreen.dart';
 import 'package:chat/misc/constants.dart' as Constants;
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(App());
@@ -14,6 +15,32 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> {
+  final key = GlobalKey<NavigatorState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "ChatX",
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: SplashScreen(),
+        routes: <String, WidgetBuilder> {
+          Constants.Screen.LOGIN: (BuildContext context) => LoginScreen(),
+          Constants.Screen.HOME: (BuildContext context) => HomeScreen()
+        },
+        navigatorKey: key);
+  }
+
+  @override
+  void dispose() {
+    //ChatRepo.getInstance().dismiss();
+    super.dispose();
+  }
+}
+
+/*class AppState extends State<App> {
   final key = GlobalKey<NavigatorState>();
 
   @override
@@ -39,7 +66,7 @@ class AppState extends State<App> {
     //ChatRepo.getInstance().dismiss();
     super.dispose();
   }
-}
+}*/
 
 /*class App extends StatelessWidget {
   @override

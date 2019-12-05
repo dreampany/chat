@@ -23,6 +23,11 @@ var logger = Logger(
   printer: PrettyPrinter(),
 );
 
+class Screen {
+  static const String LOGIN = 'login';
+  static const String HOME = 'home';
+}
+
 class Ui {
   static const int SPLASH_TIMEOUT = 2;
 

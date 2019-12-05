@@ -1,6 +1,7 @@
 import 'package:chat/home/home_screen.dart';
 import 'package:chat/login/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:chat/misc/constants.dart' as Constants;
 
 /**
  * Created by roman on 2019-11-30
@@ -9,6 +10,10 @@ import 'package:flutter/material.dart';
  * Last modified $file.lastModified
  */
 class Navigators {
+
+  static void navigate(BuildContext context, String screen) {
+    Navigator.of(context).pushReplacementNamed(screen);
+  }
 
   static void goToLogin(BuildContext context, {bool addToBackStack: false}) {
     if (addToBackStack) {
