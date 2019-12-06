@@ -20,7 +20,7 @@ class UserRepo {
 
   Future<User> currentUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String uid = prefs.getString(Constants.UID);
+    String uid = prefs.getString(Constants.ID);
     String name = prefs.getString(Constants.NAME);
     String photoUrl = prefs.getString(Constants.PHOTO_URL);
     String fcmToken = prefs.getString(Constants.TOKEN);
@@ -34,7 +34,7 @@ class UserRepo {
         ? prefs.getString(Constants.TOKEN)
         : user.token;
     await prefs
-        .setString(Constants.UID, user.uid)
+        .setString(Constants.ID, user.id)
         .then((value) =>
             prefs.setString(Constants.NAME, user.name))
         .then((value) => prefs.setString(Constants.PHOTO_URL, user.photoUrl))
@@ -54,7 +54,7 @@ class UserRepo {
   void clearCurrentUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs
-        .remove(Constants.UID)
+        .remove(Constants.ID)
         .then((value) => prefs.remove(Constants.NAME))
         .then((value) => prefs.remove(Constants.PHOTO_URL))
         .then((value) => prefs.remove(Constants.TOKEN));

@@ -53,12 +53,12 @@ class ChatRepo {
     List<User> participants = List<User>(2);
     participants.add(currentUser);
     participants.add(otherUser);
-    return Room(id: roomId, name: otherUser.name, participants: participants);
+    return null;
   }
 
   Stream<List<Room>> getRooms(User user) {
     DocumentReference userRef =
-        firestore.collection(Constants.Firestore.USERS).document(user.uid);
+        firestore.collection(Constants.Firestore.USERS).document(user.id);
     return firestore
         .collection(Constants.Firestore.ROOMS)
         .where(Constants.Firestore.PARTICIPANTS, arrayContains: userRef)
@@ -67,7 +67,7 @@ class ChatRepo {
   }
 
   Future<Room> startRoom(User currentUser, User otherUser) async {
-    DocumentReference currentRef = firestore.collection(Constants.Firestore.USERS).document(currentUser.uid);
+    DocumentReference currentRef = firestore.collection(Constants.Firestore.USERS).document(currentUser.id);
     //QuerySnapshot snapshot =await
   }
 
@@ -76,7 +76,7 @@ class ChatRepo {
     try {
       DocumentReference authorRef = firestore
           .collection(Constants.Firestore.USERS)
-          .document(currentUser.uid);
+          .document(currentUser.id);
       DocumentReference roomRef =
           firestore.collection(Constants.Firestore.ROOMS).document(roomId);
       Map<String, dynamic> map = Converters.getMessage(authorRef, message);

@@ -12,18 +12,18 @@ part 'user.g.dart';
  */
 @JsonSerializable()
 class User {
-  final String uid;
+  final String id;
   final String name;
   final String photoUrl;
   final String token;
 
-  User(this.uid, this.name, this.photoUrl, this.token);
+  User(this.id, this.name, this.photoUrl, this.token);
 
   User.fromFirebaseUser(FirebaseUser user, {String token: Constants.EMPTY}) : this(user.uid, user.displayName, user.photoUrl, token);
 
   Map<String, dynamic> get map {
     return {
-      Constants.UID: uid,
+      Constants.ID: id,
       Constants.NAME: name,
       Constants.PHOTO_URL: photoUrl,
       Constants.TOKEN: token

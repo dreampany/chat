@@ -1,5 +1,6 @@
 library Constants;
 
+import 'package:chat/model/user.dart';
 import 'package:logger/logger.dart';
 /**
  * Created by roman on 2019-11-28
@@ -11,9 +12,9 @@ import 'package:logger/logger.dart';
 const String EMPTY = '';
 
 const String USER = 'user';
-const String UID = 'uid';
+const String ID = 'id';
 const String NAME = 'name';
-const String PHOTO_URL = 'photoUrl';
+const String PHOTO_URL = 'photo_url';
 const String TOKEN = 'token';
 const String PROFILE = 'profile';
 const String EMAIL = 'email';
@@ -22,6 +23,15 @@ const String LOGGED_IN = 'logged_in';
 var logger = Logger(
   printer: PrettyPrinter(),
 );
+
+class Sep {
+  static const String UNDERSCORE = '_';
+}
+
+class Common {
+  static const String CHAT = 'chat';
+  static const String ROOMS = 'rooms';
+}
 
 class Screen {
   static const String LOGIN = 'login';
@@ -58,4 +68,18 @@ class Firestore {
   static const String TIMESTAMP = 'timestamp';
   static const String DATA = 'data';
   static const String MESSAGES = 'messages';
+}
+
+class Api {
+
+   static String createRoomId(List<User> users) {
+     List<String> ids = List<String>();
+     users.forEach((user) {
+       ids.add(user.id);
+     });
+     ids.sort();
+     return ids.join();
+   }
+
+
 }

@@ -11,7 +11,7 @@ import 'package:chat/misc/constants.dart' as Constants;
 
 class Converters {
   static User getUser(DocumentSnapshot snapshot) {
-    return User(snapshot[Constants.UID], snapshot[Constants.NAME],
+    return User(snapshot[Constants.ID], snapshot[Constants.NAME],
         snapshot[Constants.PHOTO_URL], snapshot[Constants.TOKEN]);
   }
 
@@ -29,12 +29,12 @@ class Converters {
     refs[0] = snapshot[Constants.Firestore.PARTICIPANTS][0];
     refs[1] = snapshot[Constants.Firestore.PARTICIPANTS][1];
     List<User> resultUsers = getUsers(refs, users);
-    return Room(participants: resultUsers);
+    return null;
   }
 
   static List<User> getUsers(List<DocumentReference> refs, List<User> users) {
     return users
-        .where((user) => refs.any((ref) => ref.documentID == user.uid))
+        .where((user) => refs.any((ref) => ref.documentID == user.id))
         .toList();
   }
 

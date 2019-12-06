@@ -49,7 +49,7 @@ class LoginRepo {
       Constants.logger.d("LOGIN:: AuthCredential Success");
       await firestore
           .collection(Constants.Firestore.USERS)
-          .document(user.uid)
+          .document(user.id)
           .setData(user.map, merge: true);
       setLoggedIn(true);
       return LoginSuccessResponse(user);
