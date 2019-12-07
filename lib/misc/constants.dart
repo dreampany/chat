@@ -2,24 +2,13 @@ library Constants;
 
 import 'package:chat/model/user.dart';
 import 'package:logger/logger.dart';
+
 /**
  * Created by roman on 2019-11-28
  * Copyright (c) 2019 bjit. All rights reserved.
  * hawladar.roman@bjitgroup.com
  * Last modified $file.lastModified
  */
-
-const String EMPTY = '';
-
-const String USER = 'user';
-const String ID = 'id';
-const String NAME = 'name';
-const String PHOTO_URL = 'photo_url';
-const String TOKEN = 'token';
-const String PROFILE = 'profile';
-const String EMAIL = 'email';
-const String LOGGED_IN = 'logged_in';
-
 var logger = Logger(
   printer: PrettyPrinter(),
 );
@@ -28,9 +17,10 @@ class Sep {
   static const String UNDERSCORE = '_';
 }
 
-class Common {
-  static const String CHAT = 'chat';
-  static const String ROOMS = 'rooms';
+class Common extends Sep {
+  static const String EMPTY = '';
+  static const String ID = 'id';
+  static const String TIMESTAMP = 'timestamp';
 }
 
 class Screen {
@@ -56,30 +46,37 @@ class Ui {
 }
 
 class ErrorMessages {
-  static const String NO_USER_FOUND = 'Login failed because there is no user in the database';
+  static const String NO_USER_FOUND =
+      'Login failed because there is no user in the database';
 }
 
-class Firestore {
+class Keys extends Common {
+  static const String ID = Common.ID;
+  static const String NAME = 'name';
+  static const String PHOTO_URL = 'photo_url';
+  static const String TOKEN = 'token';
+  static const String TIMESTAMP = Common.TIMESTAMP;
+  static const String CHAT = 'chat';
   static const String USERS = 'users';
   static const String ROOMS = 'rooms';
+  static const String USER = 'user';
   static const String UID = 'uid';
-  static const String PARTICIPANTS = 'participants';
   static const String AUTHOR = 'author';
-  static const String TIMESTAMP = 'timestamp';
+  static const String MEMBERS = 'members';
   static const String DATA = 'data';
   static const String MESSAGES = 'messages';
+  static const String PROFILE = 'profile';
+  static const String EMAIL = 'email';
+  static const String LOGGED_IN = 'logged_in';
 }
 
 class Api {
-
-   static String createRoomId(List<User> users) {
-     List<String> ids = List<String>();
-     users.forEach((user) {
-       ids.add(user.id);
-     });
-     ids.sort();
-     return ids.join();
-   }
-
-
+  static String createRoomId(List<User> users) {
+    List<String> ids = List<String>();
+    users.forEach((user) {
+      ids.add(user.id);
+    });
+    ids.sort();
+    return ids.join();
+  }
 }

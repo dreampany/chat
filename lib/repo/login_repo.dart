@@ -30,12 +30,12 @@ class LoginRepo {
   Future<bool> loggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //return prefs.containsKey(Constants.LOGGED_IN)
-    return prefs.getBool(Constants.LOGGED_IN) ?? false;
+    return prefs.getBool(Constants.Keys.LOGGED_IN) ?? false;
   }
 
   void setLoggedIn(bool loggedIn) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(Constants.LOGGED_IN, loggedIn);
+    await prefs.setBool(Constants.Keys.LOGGED_IN, loggedIn);
   }
 
   Future<LoginResponse> signIn(AuthCredential credential) async {
@@ -48,7 +48,7 @@ class LoginRepo {
       final user = User.fromFirebaseUser(result.user, token: token);
       Constants.logger.d("LOGIN:: AuthCredential Success");
       await firestore
-          .collection(Constants.Firestore.USERS)
+          .collection(Constants.Keys.USERS)
           .document(user.id)
           .setData(user.map, merge: true);
       setLoggedIn(true);

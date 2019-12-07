@@ -14,20 +14,24 @@ part 'user.g.dart';
 class User {
   final String id;
   final String name;
+  @JsonKey(name: Constants.Keys.PHOTO_URL)
   final String photoUrl;
   final String token;
   final int timestamp;
 
   User(this.id, this.name, this.photoUrl, this.token, {this.timestamp});
 
-  User.fromFirebaseUser(FirebaseUser user, {String token: Constants.EMPTY}) : this(user.uid, user.displayName, user.photoUrl, token);
+  User.fromFirebaseUser(FirebaseUser user,
+      {String token: Constants.Common.EMPTY})
+      : this(user.uid, user.displayName, user.photoUrl, token);
 
   Map<String, dynamic> get map {
     return {
-      Constants.ID: id,
-      Constants.NAME: name,
-      Constants.PHOTO_URL: photoUrl,
-      Constants.TOKEN: token
+      Constants.Keys.ID: id,
+      Constants.Keys.NAME: name,
+      Constants.Keys.PHOTO_URL: photoUrl,
+      Constants.Keys.TOKEN: token,
+      Constants.Keys.TIMESTAMP: timestamp
     };
   }
 

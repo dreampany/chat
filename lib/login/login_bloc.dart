@@ -56,7 +56,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   void loginOnGoogle(LoginWidget widget) async {
     Constants.logger.d("LOGIN loginOnGoogle");
     add(LoginEventInProgress());
-    final google = GoogleSignIn(scopes: [Constants.PROFILE, Constants.EMAIL]);
+    final google = GoogleSignIn(scopes: [Constants.Keys.PROFILE, Constants.Keys.EMAIL]);
     final account = await google.signIn();
     if (account == null) {
       Constants.logger.d("LOGIN Account Not Found");

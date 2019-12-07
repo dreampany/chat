@@ -33,8 +33,8 @@ class ChatRepo {
 
   void loadUsers() {
     firestore
-        .collection(Constants.Firestore.USERS)
-        .orderBy(Constants.NAME)
+        .collection(Constants.Keys.USERS)
+        .orderBy(Constants.Keys.NAME)
         .snapshots()
         .map((data) => Converters.getUsersOf(data.documents))
         .listen((users) {
@@ -48,7 +48,7 @@ class ChatRepo {
 
   Future<Room> getRoom(String roomId, User currentUser, User otherUser) async {
     DocumentReference roomRef =
-        firestore.collection(Constants.Firestore.ROOMS).document(roomId);
+        firestore.collection(Constants.Keys.ROOMS).document(roomId);
     if (roomRef == null) return null;
     List<User> participants = List<User>(2);
     participants.add(currentUser);
@@ -58,16 +58,16 @@ class ChatRepo {
 
   Stream<List<Room>> getRooms(User user) {
     DocumentReference userRef =
-        firestore.collection(Constants.Firestore.USERS).document(user.id);
+        firestore.collection(Constants.Keys.USERS).document(user.id);
     return firestore
-        .collection(Constants.Firestore.ROOMS)
-        .where(Constants.Firestore.PARTICIPANTS, arrayContains: userRef)
+        .collection(Constants.Keys.ROOMS)
+        .where(Constants.Keys.MEMBERS, arrayContains: userRef)
         .snapshots()
         .map((data) => Converters.getRooms(data.documents, subject.value));
   }
 
   Future<Room> startRoom(User currentUser, User otherUser) async {
-    DocumentReference currentRef = firestore.collection(Constants.Firestore.USERS).document(currentUser.id);
+    DocumentReference currentRef = firestore.collection(Constants.Keys.USERS).document(currentUser.id);
     //QuerySnapshot snapshot =await
   }
 
@@ -75,13 +75,13 @@ class ChatRepo {
       String roomId, User currentUser, String message) async {
     try {
       DocumentReference authorRef = firestore
-          .collection(Constants.Firestore.USERS)
+          .collection(Constants.Keys.USERS)
           .document(currentUser.id);
       DocumentReference roomRef =
-          firestore.collection(Constants.Firestore.ROOMS).document(roomId);
+          firestore.collection(Constants.Keys.ROOMS).document(roomId);
       Map<String, dynamic> map = Converters.getMessage(authorRef, message);
       roomRef.updateData({
-        Constants.Firestore.MESSAGES: FieldValue.arrayUnion([map])
+        Constants.Keys.MESSAGES: FieldValue.arrayUnion([map])
       });
       return true;
     } catch (error) {

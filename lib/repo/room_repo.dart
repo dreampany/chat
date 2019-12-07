@@ -32,7 +32,7 @@ class RoomRepo {
   Future<Room> startRoom(List<User> members) async {
     final author = await UserRepo.of().currentUser();
     String roomId = Constants.Api.createRoomId(members);
-    DatabaseReference ref = database.reference().child(Constants.Common.CHAT).child(Constants.Common.ROOMS).child(roomId);
+    DatabaseReference ref = database.reference().child(Constants.Keys.CHAT).child(Constants.Keys.ROOMS).child(roomId);
     ref.once().then((snapshot) {
       if (snapshot.value == null) {
 
