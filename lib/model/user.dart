@@ -29,7 +29,7 @@ class User {
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
 
-  Map<String, dynamic> get map {
+/*  Map<String, dynamic> get map {
     return {
       Constants.Keys.ID: id,
       Constants.Keys.NAME: name,
@@ -37,5 +37,5 @@ class User {
       Constants.Keys.TOKEN: token,
       Constants.Keys.TIMESTAMP: timestamp
     };
-  }
+  }*/
 }

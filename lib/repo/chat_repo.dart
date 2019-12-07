@@ -61,7 +61,7 @@ class ChatRepo {
         firestore.collection(Constants.Keys.USERS).document(user.id);
     return firestore
         .collection(Constants.Keys.ROOMS)
-        .where(Constants.Keys.MEMBERS, arrayContains: userRef)
+        .where(Constants.Keys.USERS, arrayContains: userRef)
         .snapshots()
         .map((data) => Converters.getRooms(data.documents, subject.value));
   }

@@ -13,25 +13,25 @@ class Room {
   final String id;
   final String name;
   final String author;
-  final List<String> members;
+  final List<String> users;
   @JsonKey(name: Constants.Keys.LAST_MESSAGE_ID)
   final String lastMessageId;
   final int timestamp;
 
-  Room(this.id, this.name, this.author, {this.members, this.lastMessageId, this.timestamp});
+  Room(this.id, this.name, this.author, {this.users, this.lastMessageId, this.timestamp});
 
   factory Room.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);
 
   Map<String, dynamic> toJson() => _$RoomToJson(this);
 
-  Map<String, dynamic> get map {
+/*  Map<String, dynamic> get map {
     return {
       Constants.Keys.ID: id,
       Constants.Keys.NAME: name,
       Constants.Keys.AUTHOR: author,
-      Constants.Keys.MEMBERS: members,
+      Constants.Keys.USERS: users,
       Constants.Keys.LAST_MESSAGE_ID: lastMessageId,
       Constants.Keys.TIMESTAMP: timestamp
     };
-  }
+  }*/
 }

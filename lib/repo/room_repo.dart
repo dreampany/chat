@@ -29,12 +29,21 @@ class RoomRepo {
     rooms.close();
   }
 
-  Future<Room> startRoom(List<User> members) async {
+  Future<Room> startRoom(List<User> users) async {
     final author = await UserRepo.of().currentUser();
-    String roomId = Constants.Api.createRoomId(members);
+    if (!users.contains(author)) {
+      users.add(author);
+    }
+    String roomId = Constants.Api.createRoomId(users);
     DatabaseReference ref = database.reference().child(Constants.Keys.CHAT).child(Constants.Keys.ROOMS).child(roomId);
     ref.once().then((snapshot) {
       if (snapshot.value == null) {
+        String name = Constants.Api.findRoomName(author, users);
+        List<String> userIds = Constants.Api.toIds(users);
+        Room room = Room(roomId, name, author.id, users: userIds, timestamp: DateTime.now().toUtc().millisecond);
+        DatabaseReference roomsRef = database.reference().child(Constants.Keys.CHAT).child(Constants.Keys.ROOMS);
+        roomsRef.child(roomId).set(room.toJson());
+        return room;
       } else {
         return snapshot.value;
       }

@@ -62,7 +62,6 @@ class Keys extends Common {
   static const String USER = 'user';
   static const String UID = 'uid';
   static const String AUTHOR = 'author';
-  static const String MEMBERS = 'members';
   static const String DATA = 'data';
   static const String MESSAGES = 'messages';
   static const String PROFILE = 'profile';
@@ -72,6 +71,14 @@ class Keys extends Common {
 }
 
 class Api {
+  static List<String> toIds(List<User> users) {
+    List<String> ids = List<String>();
+    users.forEach((user) {
+      ids.add(user.id);
+    });
+    return ids;
+  }
+
   static String createRoomId(List<User> users) {
     List<String> ids = List<String>();
     users.forEach((user) {
@@ -79,5 +86,12 @@ class Api {
     });
     ids.sort();
     return ids.join();
+  }
+
+  static String findRoomName(User author, List<User> users) {
+    List<User> list = List<User>.of(users);
+    list.remove(author);
+    User other = list.first;
+    return other.name;
   }
 }

@@ -27,7 +27,7 @@ class Converters {
 
   static Room getRoom(DocumentSnapshot snapshot, List<User> users) {
     List<DocumentReference> refs = List<DocumentReference>(2);
-    refs[0] = snapshot[Constants.Keys.MEMBERS][0];
+    refs[0] = snapshot[Constants.Keys.USERS][0];
     //refs[1] = snapshot[Constants.Firebase.PARTICIPANTS][1];
     List<User> resultUsers = getUsers(refs, users);
     return null;

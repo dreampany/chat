@@ -50,7 +50,7 @@ class LoginRepo {
       await firestore
           .collection(Constants.Keys.USERS)
           .document(user.id)
-          .setData(user.map, merge: true);
+          .setData(user.toJson(), merge: true);
       setLoggedIn(true);
       return LoginSuccessResponse(user);
     }
