@@ -59,10 +59,11 @@ class CreateRoomWidget extends StatelessWidget {
                 return InkWell(
                   child: getItem(state.getUser(index)),
                   onTap: () {
-                    createRoom(state.getUser(index));
+                    createRoom(context, state.getUser(index));
                   },
                 );
-              });
+              },
+          );
         },
       ),
     );

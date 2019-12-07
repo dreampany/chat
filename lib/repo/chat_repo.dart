@@ -2,6 +2,7 @@ import 'package:chat/misc/converters.dart';
 import 'package:chat/model/room.dart';
 import 'package:chat/model/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:rxdart/rxdart.dart';
 import 'firebase_repo.dart';
 import 'package:chat/misc/constants.dart' as Constants;
@@ -14,14 +15,16 @@ import 'package:chat/misc/constants.dart' as Constants;
  */
 class ChatRepo {
   static ChatRepo instance;
+  final FirebaseDatabase database;
   final Firestore firestore;
   final subject = BehaviorSubject<List<User>>();
 
-  ChatRepo._internal(this.firestore);
+  ChatRepo._internal(this.database, this.firestore);
 
   factory ChatRepo.of() {
     if (instance == null) {
-      instance = ChatRepo._internal(FirebaseRepo.of().firestore);
+      instance = ChatRepo._internal(
+          FirebaseRepo.of().database, FirebaseRepo.of().firestore);
       instance.loadUsers();
     }
     return instance;
@@ -32,14 +35,23 @@ class ChatRepo {
   }
 
   void loadUsers() {
-    firestore
+    DatabaseReference ref = database
+        .reference()
+        .child(Constants.Keys.CHAT)
+        .child(Constants.Keys.USERS);
+    ref.onValue
+        .map((event) => Converters.getUserOfDataSnapshot(event.snapshot))
+        .listen((users) {
+        subject.sink.add(users);
+    });
+/*    firestore
         .collection(Constants.Keys.USERS)
         .orderBy(Constants.Keys.NAME)
         .snapshots()
         .map((data) => Converters.getUsersOf(data.documents))
         .listen((users) {
       subject.sink.add(users);
-    });
+    });*/
   }
 
   Stream<List<User>> getUsers() {
@@ -67,16 +79,16 @@ class ChatRepo {
   }
 
   Future<Room> startRoom(User currentUser, User otherUser) async {
-    DocumentReference currentRef = firestore.collection(Constants.Keys.USERS).document(currentUser.id);
+    DocumentReference currentRef =
+        firestore.collection(Constants.Keys.USERS).document(currentUser.id);
     //QuerySnapshot snapshot =await
   }
 
   Future<bool> sendMessage(
       String roomId, User currentUser, String message) async {
     try {
-      DocumentReference authorRef = firestore
-          .collection(Constants.Keys.USERS)
-          .document(currentUser.id);
+      DocumentReference authorRef =
+          firestore.collection(Constants.Keys.USERS).document(currentUser.id);
       DocumentReference roomRef =
           firestore.collection(Constants.Keys.ROOMS).document(roomId);
       Map<String, dynamic> map = Converters.getMessage(authorRef, message);
@@ -89,6 +101,4 @@ class ChatRepo {
       return false;
     }
   }
-
-
 }

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:chat/misc/constants.dart' as Constants;
 
@@ -21,9 +22,11 @@ class User {
 
   User(this.id, this.name, this.photoUrl, this.token, {this.timestamp});
 
-  User.fromFirebaseUser(FirebaseUser user,
-      {String token: Constants.Common.EMPTY})
-      : this(user.uid, user.displayName, user.photoUrl, token);
+  User.fromFirebaseUser(
+    FirebaseUser user, {
+    String token: Constants.Common.EMPTY,
+        int timestamp: Constants.Common.INT
+  }) : this(user.uid, user.displayName, user.photoUrl, token, timestamp: timestamp);
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 

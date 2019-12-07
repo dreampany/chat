@@ -23,7 +23,7 @@ class CreateRoomState {
 
   factory CreateRoomState.initial() => CreateRoomState._internal( true);
 
-  factory CreateRoomState.isLoading(bool loading, CreateRoomState state) =>
+  factory CreateRoomState.loading(bool loading, CreateRoomState state) =>
       CreateRoomState._internal(loading, users: state.users);
 
   factory CreateRoomState.users(List<User> users, CreateRoomState state) =>

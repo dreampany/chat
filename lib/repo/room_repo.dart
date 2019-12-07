@@ -35,8 +35,11 @@ class RoomRepo {
       users.add(author);
     }
     String roomId = Constants.Api.createRoomId(users);
-    DatabaseReference ref = database.reference().child(Constants.Keys.CHAT).child(Constants.Keys.ROOMS).child(roomId);
-    ref.once().then((snapshot) {
+    DatabaseReference ref = database.reference()
+        .child(Constants.Keys.CHAT)
+        .child(Constants.Keys.ROOMS)
+        .child(roomId);
+   await ref.once().then((snapshot) {
       if (snapshot.value == null) {
         String name = Constants.Api.findRoomName(author, users);
         List<String> userIds = Constants.Api.toIds(users);

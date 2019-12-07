@@ -11,8 +11,19 @@ import 'package:firebase_database/firebase_database.dart';
  */
 
 class Converters {
+  static List<User> getUserOfDataSnapshot(DataSnapshot snap) {
+    if (snap.value == null) return null;
+    List<User> users = List<User>();
+    Map<dynamic, dynamic> map = snap.value;
+    map.forEach((key, value) {
+      users.add(User.fromJson(value));
+    });
+    return users;
+  }
+
   static User getUser(DocumentSnapshot snapshot) {
-    return null; /*User(snapshot[Constants.ID], snapshot[Constants.NAME],
+    return null;
+    /*User(snapshot[Constants.ID], snapshot[Constants.NAME],
         snapshot[Constants.PHOTO_URL], snapshot[Constants.TOKEN]);*/
   }
 
@@ -39,7 +50,8 @@ class Converters {
         .toList();
   }
 
-  static Map<String, dynamic> getMessage(DocumentReference authorRef, String message) {
+  static Map<String, dynamic> getMessage(
+      DocumentReference authorRef, String message) {
     return {
       //Constants.Firebase.AUTHOR: authorRef,
       //Constants.Firebase.TIMESTAMP: ServerValue.timestamp,
@@ -47,7 +59,8 @@ class Converters {
     };
   }
 
-  static Map<String, dynamic> createRoom(DocumentReference authorRef, String message) {
+  static Map<String, dynamic> createRoom(
+      DocumentReference authorRef, String message) {
     return {
       //Constants.Firebase.AUTHOR: authorRef,
       //Constants.Firebase.TIMESTAMP: ServerValue.timestamp,

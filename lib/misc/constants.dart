@@ -19,6 +19,8 @@ class Sep {
 
 class Common extends Sep {
   static const String EMPTY = '';
+  static const int INT = 0;
+  static const double DOUBLE = 0.0;
   static const String ID = 'id';
   static const String TIMESTAMP = 'timestamp';
 }

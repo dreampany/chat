@@ -4,6 +4,7 @@ import 'package:chat/repo/firebase_repo.dart';
 import 'package:chat/repo/user_repo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:chat/misc/constants.dart' as Constants;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,19 +18,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LoginRepo {
   static LoginRepo instance;
   final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseDatabase database;
   final Firestore firestore;
 
-  LoginRepo._internal(this.firestore);
+  LoginRepo._internal(this.database, this.firestore);
 
   factory LoginRepo.of() {
     if (instance == null)
-      instance = LoginRepo._internal(FirebaseRepo.of().firestore);
+      instance = LoginRepo._internal(
+          FirebaseRepo.of().database, FirebaseRepo.of().firestore);
     return instance;
   }
 
   Future<bool> loggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    //return prefs.containsKey(Constants.LOGGED_IN)
     return prefs.getBool(Constants.Keys.LOGGED_IN) ?? false;
   }
 
@@ -47,10 +49,16 @@ class LoginRepo {
       final token = await UserRepo.of().getToken();
       final user = User.fromFirebaseUser(result.user, token: token);
       Constants.logger.d("LOGIN:: AuthCredential Success");
-      await firestore
+      /*await firestore
           .collection(Constants.Keys.USERS)
           .document(user.id)
-          .setData(user.toJson(), merge: true);
+          .setData(user.toJson(), merge: true);*/
+      await database
+          .reference()
+          .child(Constants.Keys.CHAT)
+          .child(Constants.Keys.USERS)
+          .child(user.id)
+          .set(user);
       setLoggedIn(true);
       return LoginSuccessResponse(user);
     }

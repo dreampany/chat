@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:chat/model/user.dart';
+import 'package:chat/repo/chat_repo.dart';
 import 'package:chat/repo/user_repo.dart';
 import 'package:chat/room/create_room_event.dart';
 import 'package:chat/room/create_room_state.dart';
@@ -11,8 +12,8 @@ import 'package:chat/room/create_room_state.dart';
  * Last modified $file.lastModified
  */
 class CreateRoomBloc extends Bloc<CreateRoomEvent, CreateRoomState> {
-
   User currentUser;
+  StreamSubscription<List<User>> subscription;
 
   @override
   CreateRoomState get initialState {
@@ -21,13 +22,27 @@ class CreateRoomBloc extends Bloc<CreateRoomEvent, CreateRoomState> {
   }
 
   @override
-  Stream<CreateRoomState> mapEventToState(CreateRoomEvent event) {
-    // TODO: implement mapEventToState
-    return null;
+  Stream<CreateRoomState> mapEventToState(CreateRoomEvent event) async* {
+    if (event is RoomUsersUpdatedEvent) {
+      yield CreateRoomState.loading(false, CreateRoomState.users(event.users, state));
+    } else if (event is CreateRoomRequestedEvent) {
+      yield CreateRoomState.loading(true, state);
+    }
+  }
+
+  @override
+  Future<void> close() {
+    if (subscription != null) subscription.cancel();
+    return super.close();
   }
 
   void init()  async {
     currentUser = await UserRepo.of().currentUser();
+    subscription = ChatRepo.of().getUsers().listen((users) {
+      List<User> result = users.toList();
+      result.remove(currentUser);
+      add(RoomUsersUpdatedEvent(result));
+    });
   }
 
   void createRoom(User otherUser) {
@@ -37,6 +52,6 @@ class CreateRoomBloc extends Bloc<CreateRoomEvent, CreateRoomState> {
     List<User> rooms = List<User>();
     rooms.add(currentUser);
     rooms.add(otherUser);
-
+    //ChatRepo.of()
   }
 }
