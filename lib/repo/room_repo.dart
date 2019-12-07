@@ -35,7 +35,6 @@ class RoomRepo {
     DatabaseReference ref = database.reference().child(Constants.Keys.CHAT).child(Constants.Keys.ROOMS).child(roomId);
     ref.once().then((snapshot) {
       if (snapshot.value == null) {
-
       } else {
         return snapshot.value;
       }

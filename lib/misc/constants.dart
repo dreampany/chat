@@ -68,6 +68,7 @@ class Keys extends Common {
   static const String PROFILE = 'profile';
   static const String EMAIL = 'email';
   static const String LOGGED_IN = 'logged_in';
+  static const String LAST_MESSAGE_ID = 'last_message_id';
 }
 
 class Api {

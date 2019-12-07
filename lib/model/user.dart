@@ -1,6 +1,6 @@
-import 'package:chat/misc/constants.dart' as Constants;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:chat/misc/constants.dart' as Constants;
 
 part 'user.g.dart';
 
@@ -25,6 +25,10 @@ class User {
       {String token: Constants.Common.EMPTY})
       : this(user.uid, user.displayName, user.photoUrl, token);
 
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserToJson(this);
+
   Map<String, dynamic> get map {
     return {
       Constants.Keys.ID: id,
@@ -34,8 +38,4 @@ class User {
       Constants.Keys.TIMESTAMP: timestamp
     };
   }
-
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-
-  Map<String, dynamic> toJson() => _$UserToJson(this);
 }

@@ -1,25 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'room.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-User _$UserFromJson(Map<String, dynamic> json) {
-  return User(
+Room _$RoomFromJson(Map<String, dynamic> json) {
+  return Room(
     json['id'] as String,
     json['name'] as String,
-    json['photo_url'] as String,
-    json['token'] as String,
+    json['author'] as String,
+    members: (json['members'] as List)?.map((e) => e as String)?.toList(),
+    lastMessageId: json['last_message_id'] as String,
     timestamp: json['timestamp'] as int,
   );
 }
 
-Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+Map<String, dynamic> _$RoomToJson(Room instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'photo_url': instance.photoUrl,
-      'token': instance.token,
+      'author': instance.author,
+      'members': instance.members,
+      'last_message_id': instance.lastMessageId,
       'timestamp': instance.timestamp,
     };
