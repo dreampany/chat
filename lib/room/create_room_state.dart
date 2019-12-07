@@ -28,4 +28,14 @@ class CreateRoomState {
 
   factory CreateRoomState.users(List<User> users, CreateRoomState state) =>
       CreateRoomState._internal(state.loading, users: state.users);
+
+
+  int userCount() {
+    return users == null ? 0 : users.length;
+  }
+
+  User getUser(int index) {
+    if (users == null || users.isEmpty) return null;
+    return users[index];
+  }
 }

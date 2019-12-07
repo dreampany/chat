@@ -2,6 +2,7 @@ import 'package:chat/model/room.dart';
 import 'package:chat/model/user.dart';
 import 'package:chat/model/user_item.dart';
 import 'package:chat/room/create_room_bloc.dart';
+import 'package:chat/room/create_room_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:chat/misc/constants.dart' as Constants;
@@ -37,11 +38,42 @@ class CreateRoomWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return null;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Select User'),
+      ),
+      body: BlocBuilder(
+        bloc: BlocProvider.of<CreateRoomBloc>(context),
+        builder: (context, CreateRoomState state) {
+          if (state.loading) {
+            return Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 4.0,
+              ),
+            );
+          }
+          return ListView.builder(
+              itemCount: state.userCount(),
+              padding: EdgeInsets.all(Constants.Ui.SMALLER_PADDING),
+              itemBuilder: (context, index) {
+                return InkWell(
+                  child: getItem(state.getUser(index)),
+                  onTap: () {
+                    createRoom(state.getUser(index));
+                  },
+                );
+              });
+        },
+      ),
+    );
   }
 
   Widget getItem(User user) {
     return UserItem(user: user);
+  }
+
+  void createRoom(BuildContext context, User user) {
+    BlocProvider.of<CreateRoomBloc>(context).startChat(state.users[index], this);
   }
 
   void goToRoom(Room room) {
