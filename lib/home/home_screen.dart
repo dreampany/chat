@@ -6,6 +6,7 @@ import 'package:chat/model/room.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:chat/misc/constants.dart' as Constants;
+
 /**
  * Created by roman on 2019-12-01
  * Copyright (c) 2019 bjit. All rights reserved.
@@ -68,19 +69,39 @@ class HomeWidget extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return InkWell(
                       child: getItem(state.rooms[index]),
-                      onTap: () {
-
-                      },
+                      onTap: () {},
                     );
-                  }
-              );
+                  });
             }
+
+            return wrapContent(context, content);
           }),
     );
   }
 
+  Widget wrapContent(BuildContext context, Widget content) {
+    return Stack(
+      children: <Widget>[
+        content,
+        Container(
+          alignment: Alignment.bottomRight,
+          padding: EdgeInsets.all(Constants.Ui.STANDARD_PADDING),
+          child: FloatingActionButton(
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              backgroundColor: Colors.blueAccent,
+              elevation: Constants.Ui.STANDARD_ELEVATION,
+              onPressed: createRoom,
+          ),
+        ),
+      ],
+    );
+  }
+
   UserItem getItem(Room room) {
-    return null;//UserItem(user: room.members.last);
+    return null; //UserItem(user: room.members.last);
   }
 
   void createRoom() {
@@ -92,6 +113,6 @@ class HomeWidget extends StatelessWidget {
   }
 
   void goToRoom(Room room) {
-     //Navigators.goToRoom(state.context, room.id, room.name)
+    //Navigators.goToRoom(state.context, room.id, room.name)
   }
 }

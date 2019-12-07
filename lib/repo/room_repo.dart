@@ -45,7 +45,8 @@ class RoomRepo {
         roomsRef.child(roomId).set(room.toJson());
         return room;
       } else {
-        return snapshot.value;
+        Room room = Room.fromJson(snapshot.value);
+        return room;
       }
     });
 

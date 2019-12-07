@@ -4,6 +4,7 @@ import 'package:chat/model/user_item.dart';
 import 'package:chat/room/create_room_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:chat/misc/constants.dart' as Constants;
 
 /**
  * Created by roman on 2019-12-02

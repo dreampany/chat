@@ -1,5 +1,6 @@
 import 'package:chat/home/home_screen.dart';
 import 'package:chat/login/login_screen.dart';
+import 'package:chat/room/create_room_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:chat/misc/constants.dart' as Constants;
 
@@ -47,12 +48,12 @@ class Navigators {
     if (addToBackStack) {
       Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen())
+          MaterialPageRoute(builder: (context) => CreateRoomScreen())
       );
     } else {
       Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen())
+          MaterialPageRoute(builder: (context) => CreateRoomScreen())
       );
     }
   }
