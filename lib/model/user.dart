@@ -16,8 +16,9 @@ class User {
   final String name;
   final String photoUrl;
   final String token;
+  final int timestamp;
 
-  User(this.id, this.name, this.photoUrl, this.token);
+  User(this.id, this.name, this.photoUrl, this.token, {this.timestamp});
 
   User.fromFirebaseUser(FirebaseUser user, {String token: Constants.EMPTY}) : this(user.uid, user.displayName, user.photoUrl, token);
 

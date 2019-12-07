@@ -7,6 +7,7 @@ import 'package:chat/home/home_state.dart';
 import 'package:chat/model/room.dart';
 import 'package:chat/repo/login_repo.dart';
 import 'package:chat/repo/user_repo.dart';
+import 'package:firebase_database/firebase_database.dart';
 /**
  * Created by roman on 2019-12-01
  * Copyright (c) 2019 bjit. All rights reserved.
@@ -31,6 +32,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     LoginRepo.of().signOut().then(
         (success) {
           //if (success)
+          //ServerValue.timestamp
         }
     );
   }

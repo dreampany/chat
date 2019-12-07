@@ -80,7 +80,7 @@ class HomeWidget extends StatelessWidget {
   }
 
   UserItem getItem(Room room) {
-    return UserItem(user: room.participants.last);
+    return null;//UserItem(user: room.members.last);
   }
 
   void createRoom() {

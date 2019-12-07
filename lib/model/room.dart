@@ -10,8 +10,11 @@ import 'package:chat/model/user.dart';
 class Room {
   final String id;
   final String name;
-  final List<User> members;
+  final String author;
+  final List<String> members;
   final String lastMessageId;
+  final int timestamp;
 
-  Room(this.id, this.name, this.members, {this.lastMessageId});
+  Room(this.id, this.name, this.author,
+      {this.members, this.lastMessageId, this.timestamp});
 }

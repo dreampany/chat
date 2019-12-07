@@ -2,6 +2,7 @@ import 'package:chat/model/room.dart';
 import 'package:chat/model/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:chat/misc/constants.dart' as Constants;
+import 'package:firebase_database/firebase_database.dart';
 /**
  * Created by roman on 2019-12-01
  * Copyright (c) 2019 bjit. All rights reserved.
@@ -38,11 +39,18 @@ class Converters {
         .toList();
   }
 
-  static Map<String, dynamic> getMessage(
-      DocumentReference authorRef, String message) {
+  static Map<String, dynamic> getMessage(DocumentReference authorRef, String message) {
     return {
       Constants.Firestore.AUTHOR: authorRef,
-      Constants.Firestore.TIMESTAMP: DateTime.now(),
+      Constants.Firestore.TIMESTAMP: ServerValue.timestamp,
+      Constants.Firestore.DATA: message,
+    };
+  }
+
+  static Map<String, dynamic> createRoom(DocumentReference authorRef, String message) {
+    return {
+      Constants.Firestore.AUTHOR: authorRef,
+      Constants.Firestore.TIMESTAMP: ServerValue.timestamp,
       Constants.Firestore.DATA: message,
     };
   }

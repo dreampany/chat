@@ -1,6 +1,7 @@
 import 'package:chat/model/room.dart';
 import 'package:chat/model/user.dart';
 import 'package:chat/repo/firebase_repo.dart';
+import 'package:chat/repo/user_repo.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:chat/misc/constants.dart' as Constants;
@@ -29,6 +30,7 @@ class RoomRepo {
   }
 
   Future<Room> startRoom(List<User> members) async {
+    final author = await UserRepo.of().currentUser();
     String roomId = Constants.Api.createRoomId(members);
     DatabaseReference ref = database.reference().child(Constants.Common.CHAT).child(Constants.Common.ROOMS).child(roomId);
     ref.once().then((snapshot) {
