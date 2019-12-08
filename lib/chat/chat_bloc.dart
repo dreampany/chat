@@ -22,7 +22,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   @override
   ChatState get initialState {
-loadMessages();
+    loadMessages();
     return ChatState.initial();
   }
 
@@ -30,8 +30,7 @@ loadMessages();
   Stream<ChatState> mapEventToState(ChatEvent event) async* {
     if (event is MessageReceivedEvent)
       yield ChatState.messages(event.messages);
-    else if (event is MessageSendErrorEvent)
-      yield ChatState.error(state);
+    else if (event is MessageSendErrorEvent) yield ChatState.error(state);
   }
 
   @override
@@ -43,5 +42,10 @@ loadMessages();
   void loadMessages() async {
     final User user = await UserRepo.of().currentUser();
     //subscription = ChatRepo.of().ge
+  }
+
+  void sendMessage() async {
+    final User user = await UserRepo.of().currentUser();
+
   }
 }

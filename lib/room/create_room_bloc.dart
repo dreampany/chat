@@ -63,7 +63,7 @@ class CreateRoomBloc extends Bloc<CreateRoomEvent, CreateRoomState> {
     users.add(currentUser);
     users.add(otherUser);
     RoomRepo.of().startRoom(users).then((room) {
-      widget.
+      //widget.
     });
   }
 }

@@ -14,6 +14,7 @@ import 'package:chat/misc/constants.dart' as Constants;
  */
 class ChatScreen extends StatefulWidget {
   final String roomId, name;
+  final TextEditingController controller = TextEditingController();
 
   ChatScreen({Key key, @required this.roomId, @required this.name})
       : super(key: key);
@@ -49,11 +50,11 @@ class ChatWidget extends StatelessWidget {
       appBar: AppBar(
         title: Text(screen.name),
       ),
-      body: getBody(context),
+      body: getBody(context, screen),
     );
   }
 
-  Widget getBody(BuildContext context) {
+  Widget getBody(BuildContext context, ChatScreen screen) {
     return BlocBuilder(
         bloc: BlocProvider.of<ChatBloc>(context),
         builder: (context, ChatState state) {
@@ -65,33 +66,60 @@ class ChatWidget extends StatelessWidget {
             return Column(
               mainAxisSize: MainAxisSize.max,
               verticalDirection: VerticalDirection.up,
-              children: <Widget>[
-                getInput(),
-
-              ],
+              children: <Widget>[getInput(screen), getListView(state)],
             );
           }
         });
   }
 
-  Widget getInput() {
+  Widget getInput(BuildContext context, ChatScreen screen) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-
+        Expanded(
+            child: Container(
+              margin: EdgeInsets.only(bottom: Constants.Ui.STANDARD_PADDING),
+              padding: EdgeInsets.symmetric(
+                  vertical: Constants.Ui.SMALLER_PADDING,
+                  horizontal: Constants.Ui.SMALLER_PADDING
+              ),
+              child: TextField(
+                maxLines: null,
+                controller: screen.controller,
+                focusNode: FocusNode(),
+                style: TextStyle(color: Colors.black),
+                cursorColor: Colors.blueAccent,
+                decoration: InputDecoration(hintText: "Your message..."),
+                textCapitalization: TextCapitalization.sentences,
+              ),
+            )
+        ),
+        Container(
+          child: IconButton(
+              icon: Icon(Icons.send),
+              onPressed: () {
+                sendMessage(context, screen);
+              }),
+          decoration: BoxDecoration(shape: BoxShape.circle),
+        )
       ],
     );
   }
 
   Widget getListView(ChatState state) {
-    return ListView.builder(
-      padding: EdgeInsets.symmetric(
-        horizontal: Constants.Ui.SMALLER_PADDING,
-        vertical: Constants.Ui.SMALLER_PADDING,
+    return Expanded(
+      child: Container(
+        child: ListView.builder(
+          padding: EdgeInsets.symmetric(
+            horizontal: Constants.Ui.SMALLER_PADDING,
+            vertical: Constants.Ui.SMALLER_PADDING,
+          ),
+          itemCount: state.messageCount(),
+          reverse: true,
+          itemBuilder: (context, index) =>
+              getMessageItem(state.getMessage(index)),
+        ),
       ),
-      itemCount: state.messageCount(),
-      reverse: true,
-      itemBuilder: (context, index) => getMessageItem(state.getMessage(index)),
     );
   }
 
@@ -99,4 +127,11 @@ class ChatWidget extends StatelessWidget {
     return MessageItem(message: message);
   }
 
+  void sendMessage(BuildContext context, ChatScreen screen) {
+    String text = screen.controller.text;
+    if (text.isNotEmpty) {
+     // BlocProvider.of<ChatBloc>(context).send(text);
+      screen.controller.text = "";
+    }
+  }
 }
