@@ -1,3 +1,4 @@
+import 'package:chat/misc/navigations.dart';
 import 'package:chat/model/room.dart';
 import 'package:chat/model/user.dart';
 import 'package:chat/model/user_item.dart';
@@ -74,10 +75,10 @@ class CreateRoomWidget extends StatelessWidget {
   }
 
   void createRoom(BuildContext context, User user) {
-    BlocProvider.of<CreateRoomBloc>(context).startChat(state.users[index], this);
+    BlocProvider.of<CreateRoomBloc>(context).createRoom(user, this);
   }
 
   void goToRoom(Room room) {
-    //Navigators.goToRoom(state.context, room.id, room.name)
+    Navigators.goToRoom(state.context, room.id, room.name);
   }
 }

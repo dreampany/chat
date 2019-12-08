@@ -2,8 +2,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:chat/model/user.dart';
 import 'package:chat/repo/chat_repo.dart';
+import 'package:chat/repo/room_repo.dart';
 import 'package:chat/repo/user_repo.dart';
 import 'package:chat/room/create_room_event.dart';
+import 'package:chat/room/create_room_screen.dart';
 import 'package:chat/room/create_room_state.dart';
 /**
  * Created by roman on 2019-12-02
@@ -36,6 +38,14 @@ class CreateRoomBloc extends Bloc<CreateRoomEvent, CreateRoomState> {
     return super.close();
   }
 
+  void dispatchCancelEvent() {
+    add(CancelCreateRoomEvent());
+  }
+
+  void resetState() {
+    dispatchCancelEvent();
+  }
+
   void init()  async {
     currentUser = await UserRepo.of().currentUser();
     subscription = ChatRepo.of().getUsers().listen((users) {
@@ -45,13 +55,15 @@ class CreateRoomBloc extends Bloc<CreateRoomEvent, CreateRoomState> {
     });
   }
 
-  void createRoom(User otherUser) {
+  void createRoom(User otherUser, CreateRoomWidget widget) {
     add(CreateRoomRequestedEvent());
     assert(currentUser != null);
     assert(currentUser != otherUser);
-    List<User> rooms = List<User>();
-    rooms.add(currentUser);
-    rooms.add(otherUser);
-    //ChatRepo.of()
+    List<User> users = List<User>();
+    users.add(currentUser);
+    users.add(otherUser);
+    RoomRepo.of().startRoom(users).then((room) {
+      widget.
+    });
   }
 }

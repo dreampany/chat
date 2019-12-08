@@ -1,4 +1,3 @@
-import 'package:chat/model/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 /**
@@ -8,10 +7,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
  * Last modified $file.lastModified
  */
 class Message {
-  final User author;
-  final Timestamp timestamp;
+  final String author;
   final String data;
+  final Timestamp timestamp;
   final bool out;
 
-  Message(this.author, this.timestamp, this.data, [this.out = false]);
+  Message(this.author, this.data, this.timestamp, [this.out = false]);
 }
