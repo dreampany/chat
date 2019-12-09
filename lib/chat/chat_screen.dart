@@ -66,7 +66,7 @@ class ChatWidget extends StatelessWidget {
             return Column(
               mainAxisSize: MainAxisSize.max,
               verticalDirection: VerticalDirection.up,
-              children: <Widget>[getInput(screen), getListView(state)],
+              children: <Widget>[getInput(context, screen), getListView(state)],
             );
           }
         });

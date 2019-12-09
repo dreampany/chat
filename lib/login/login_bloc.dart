@@ -19,26 +19,35 @@ import 'login_state.dart';
  * Last modified $file.lastModified
  */
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  StreamSubscription<FirebaseUser> listener;
+  StreamSubscription<FirebaseUser> subscription;
 
   @override
   LoginState get initialState => LoginState.initial();
 
   @override
-  Stream<LoginState> mapEventToState(LoginEvent event) {
-    // TODO: implement mapEventToState
-    return null;
+  Stream<LoginState> mapEventToState(LoginEvent event) async* {
+    if (event is LoginWithGoogleEvent) {
+       yield LoginState.loading(false);
+    } else if (event is LoginWithFacebookEvent) {
+      yield LoginState.loading(false);
+    } else if (event is LogoutEvent) {
+      yield LoginState.loading(false);
+    } else if (event is LoginEventInProgress) {
+      yield LoginState.loading(true);
+    } else if (event is LoginErrorEvent) {
+
+    }
   }
 
   @override
   Future<void> close() {
-    // TODO: implement close
+    if (subscription != null) subscription.cancel();
     return super.close();
   }
 
   void setAuthListener(LoginWidget widget) {
-    if (listener != null) return;
-    listener = FirebaseAuth.instance.onAuthStateChanged.listen((user) {
+    if (subscription != null) return;
+    subscription = FirebaseAuth.instance.onAuthStateChanged.listen((user) {
       if (user == null) {
         add(LogoutEvent());
       } else {
