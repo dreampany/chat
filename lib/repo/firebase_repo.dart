@@ -17,7 +17,7 @@ class FirebaseRepo {
   factory FirebaseRepo.of() {
     if (instance == null) {
       instance = FirebaseRepo._internal(FirebaseDatabase.instance, Firestore.instance);
-      instance.firestore.settings(persistenceEnabled: true, timestampsInSnapshotsEnabled: true);
+      //instance.firestore.settings(persistenceEnabled: true, timestampsInSnapshotsEnabled: true);
     }
     return instance;
   }
